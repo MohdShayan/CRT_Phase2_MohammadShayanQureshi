@@ -1,0 +1,69 @@
+
+Circuit Breaker states
+CLOSED → normal calls
+OPEN → service blocked
+HALF-OPEN → testing recovery
+
+2. @CircuitBreaker
+Monitors failures in external calls
+Redirects to fallback when service fails
+
+-----------------------------------------------
+package com.example.demo.response;
+
+public class PaymentResponse {
+    private String status;
+    private String message;
+
+    public PaymentResponse() {}
+
+    public PaymentResponse(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public String getStatus() {return status;}
+    public String getMessage() {return message;}
+    
+    public void setStatus(String s) {
+    	this.status=s;
+    }
+    public void setMessage(String m) {
+    	this.message=m;
+    }
+}
+
+
+-------------------------------------------------------------------------
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Service
+public class PaymentServiceClient {
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    private static final String PAYMENT_SERVICE_URL =
+            "http://payment-service/api/payments";
+
+    @CircuitBreaker(name = "paymentService", fallbackMethod = "paymentFallback")
+    public PaymentResponse callPaymentService() {
+
+        return restTemplate.getForObject(
+                PAYMENT_SERVICE_URL,
+                PaymentResponse.class
+        );
+    }
+
+    // fallback method (must match signature + Throwable)
+    public PaymentResponse paymentFallback(Exception ex) {
+        return new PaymentResponse(
+                "FAILED",
+                "Payment service is unavailable. Please try later."
+        );
+    }
+}
+
+-------------------------------------------

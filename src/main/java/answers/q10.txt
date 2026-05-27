@@ -1,0 +1,17 @@
+(a) Find by city
+List<Student> findByCity(String city);
+
+(b) Find by name and city
+List<Student> findByNameAndCity(String name, String city);
+
+(c) Find by email containing keyword
+List<Student> findByEmailContaining(String keyword);
+
+(d) Count students in a city
+long countByCity(String city);
+
+
+findBy -> fetch records
+countBy -> return count
+And -> multiple conditions
+Containing -> LIKE '%value%'

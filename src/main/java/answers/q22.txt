@@ -1,0 +1,44 @@
+
+
+The useEffect is missing a dependency array, causing it to run on every render and create an infinite loop.
+----------------------------------------
+Fixed code : 
+
+useEffect(() => {
+  fetch('/api/users')
+    .then(res => res.json())
+    .then(data => setUsers(data));
+}, []); 
+
+------------------------------------------------
+
+final code 
+function UserList() {
+  const [users, setUsers] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <ul>
+      {users.map(u => (
+        <li key={u.id}>{u.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+
+--------------------------------------------

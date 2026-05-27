@@ -1,0 +1,24 @@
+
+spring.application.name → registers service name in Eureka
+defaultZone → tells where Eureka Server is running
+---------------------------------------
+spring:
+  application:
+    name: product-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+----------------------------------
+@SpringBootApplication
+public class ProductServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ProductServiceApplication.class, args);
+    }
+}

@@ -1,0 +1,41 @@
+
+
+-------------------------------------------------------------
+
+
+React frotnend code
+
+
+async function loadUsers() {
+    const userList = document.getElementById("user-list");
+    const errorEl = document.getElementById("error");
+
+
+    userList.innerHTML = "";
+    errorEl.textContent = "";
+
+    try {
+        const response = await fetch("/api/users");
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch users");
+        }
+
+        const users = await response.json();
+
+        users.forEach(user => {
+            const li = document.createElement("li");
+            li.textContent = user.name;
+            userList.appendChild(li);
+        });
+
+    } catch (error) {
+        errorEl.textContent = error.message;
+    }
+}
+
+---------------------------------------------------
+
+<ul id="user-list"></ul>
+<p id="error" style="color:red;"></p>
+

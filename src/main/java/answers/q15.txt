@@ -1,0 +1,25 @@
+
+
+Service Discovery is a mechanism where microservices automatically register themselves with a central registry and discover other services without hardcoding their IP addresses or URLs.
+
+Why  needed
+Microservices often run on dynamic IPs/ports
+scale up/down frequently
+Service Discovery enables loose coupling and dynamic routing
+---------------------------------------------------------------
+
+
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class RestTemplateConfig {
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}

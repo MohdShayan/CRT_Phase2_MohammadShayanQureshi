@@ -1,0 +1,43 @@
+package com.example.demo;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.example.demo.entity.Product;
+import com.example.demo.repository.ProductRepository;
+import com.example.demo.service.ProductService;
+
+@ExtendWith(MockitoExtension.class)
+public class ProductServiceTest {
+
+    @Mock
+    private ProductRepository repo;
+
+    @InjectMocks
+    private ProductService productService;
+
+    @Test
+    void testGetById() {
+
+        // Arrange (stub repository response)
+        Product product = new Product();
+        product.setId(1L);
+        product.setName("Laptop");
+
+        when(repo.findById(1L)).thenReturn(Optional.of(product));
+
+        // Act
+        Product result = productService.getById(1L);
+
+        // Assert
+        assertEquals("Laptop", result.getName());
+    }
+}

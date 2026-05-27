@@ -1,0 +1,56 @@
+
+If validation fails:
+Spring returns:
+400 Bad Request
+
+---------------------------------------
+package com.example.demo.dto;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
+public class StudentDTO {
+
+    @NotBlank(message = "Name must not be blank")
+    private String name;
+
+    @Min(value = 18, message = "Age must be 18 or above")
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+-----------------------------
+
+package com.example.demo.controller;
+
+import com.example.demo.dto.StudentDTO;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    @PostMapping
+    public ResponseEntity<String> createStudent(@Valid @RequestBody StudentDTO student) {
+        return ResponseEntity.status(201).body("Student created successfully");
+    }
+}
+
+--------------------------------------

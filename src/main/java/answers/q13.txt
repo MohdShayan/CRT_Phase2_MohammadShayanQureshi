@@ -1,0 +1,11 @@
+It breaks the circuit when failures cross a threshold and stops further requests for a short time.
+
+---------------------------
+why needed : 
+
+Improves fault tolerance 
+Avoids long waiting time
+Enables fallback response so user still gets a valid response
+
+---------------------------
+

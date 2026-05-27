@@ -1,0 +1,12 @@
+second highest salary
+
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+----------------------------------------
+
+JPQL (@Query in Repository)
+
+@Query("SELECT MAX(e.salary) FROM Employee e WHERE e.salary < (SELECT MAX(e.salary) FROM Employee e)")
+Double findSecondHighestSalary();

@@ -1,0 +1,5 @@
+The N+1 query problem happens when JPA first executes 1 query to fetch parent records, and then executes N additional queries to fetch child entities for each record,
+
+-----------------------------------------------
+
+Fix: Use JOIN FETCH in JPQL to load relationships in one query.

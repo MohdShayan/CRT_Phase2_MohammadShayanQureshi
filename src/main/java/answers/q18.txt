@@ -1,0 +1,26 @@
+@Mock vs @MockBean
+
+
+@Mock (Mockito)
+Used in pure unit tests
+Does NOT load Spring context
+Creates a fake object manually
+
+ Use when:
+
+Testing only service logic
+No Spring Boot context needed
+Fast tests
+
+@MockBean (Spring Boot Test)
+Used in Spring Boot integration tests
+Loads full Spring context
+Replaces real bean inside Spring with mock
+
+Used with:
+
+Use when:
+
+full application flow
+Need Spring container
+Want to mock DB/service layer inside Spring
